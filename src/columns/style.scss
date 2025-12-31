@@ -1,0 +1,22 @@
+.flexblocks-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--column-gap, 20px);
+    align-items: var(--vertical-align, stretch);
+    width: 100%;
+    
+    // Default child behavior if not handled by child block
+    > * {
+        flex: 1;
+        min-width: 0; // Prevent flex item overflow
+    }
+
+    @media (max-width: 767px) {
+        flex-direction: var(--stack-mobile, row);
+        
+        > * {
+            width: 100% !important; // Force stack if enabled
+            flex-basis: 100% !important;
+        }
+    }
+}

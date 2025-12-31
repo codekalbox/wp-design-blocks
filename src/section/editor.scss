@@ -1,0 +1,7 @@
+.flexblocks-section {
+    border: 1px dashed rgba(0,0,0,0.1);
+    
+    &.is-selected {
+        border-color: var(--wp-admin-theme-color);
+    }
+}

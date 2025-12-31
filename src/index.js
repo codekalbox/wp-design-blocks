@@ -1,5 +1,2 @@
-/**
- * Import blocks
- */
-import './blocks/section';
-import './blocks/column';
+import './section';
+import './columns';

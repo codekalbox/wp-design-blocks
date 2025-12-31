@@ -1,0 +1,92 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "flexblocks/section",
+	"version": "1.0.0",
+	"title": "Section Container",
+	"category": "layout",
+	"icon": "layout",
+	"description": "A powerful container block with full flexbox control.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "full", "wide" ],
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": true
+        },
+        "color": {
+            "background": true,
+            "text": true,
+            "gradient": true
+        },
+        "layout": {
+            "allowSwitching": false,
+            "allowInheriting": false,
+            "default": {
+                "type": "flex",
+                "orientation": "vertical"
+            }
+        }
+	},
+	"attributes": {
+		"tagName": {
+			"type": "string",
+			"default": "section"
+		},
+		"layoutWidth": {
+			"type": "string",
+			"default": "boxed"
+		},
+		"maxWidth": {
+			"type": "object",
+			"default": {
+				"value": 1200,
+				"unit": "px"
+			}
+		},
+        "minHeight": {
+            "type": "object",
+            "default": {
+                "value": 0,
+                "unit": "px"
+            }
+        },
+        "flexDirection": {
+            "type": "string",
+            "default": "column"
+        },
+        "justifyContent": {
+            "type": "string",
+            "default": "flex-start"
+        },
+        "alignItems": {
+            "type": "string",
+            "default": "stretch"
+        },
+        "flexWrap": {
+            "type": "string",
+            "default": "nowrap"
+        },
+        "gap": {
+            "type": "object",
+            "default": {
+                "value": 0,
+                "unit": "px"
+            }
+        },
+        "zIndex": {
+            "type": "number",
+            "default": 0
+        },
+        "overflow": {
+            "type": "string",
+            "default": "visible"
+        }
+	},
+	"textdomain": "flexblocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

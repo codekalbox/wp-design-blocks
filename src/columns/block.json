@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "flexblocks/columns",
+	"version": "1.0.0",
+	"title": "Advanced Columns",
+	"category": "layout",
+	"icon": "columns",
+	"description": "Flexible columns layout.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "full", "wide" ],
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": true
+        },
+        "color": {
+            "background": true,
+            "text": true,
+            "gradient": true
+        }
+	},
+	"attributes": {
+        "columnsCount": {
+            "type": "number",
+            "default": 2
+        },
+        "stackMobile": {
+            "type": "boolean",
+            "default": true
+        },
+        "columnGap": {
+             "type": "object",
+             "default": {
+                 "value": 20,
+                 "unit": "px"
+             }
+        },
+        "verticalAlign": {
+            "type": "string",
+            "default": "stretch"
+        }
+    },
+	"textdomain": "flexblocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
