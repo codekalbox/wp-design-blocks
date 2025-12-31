@@ -15,19 +15,22 @@ import { createBlock } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import './editor.scss';
 
+// Import utilities
+import ErrorBoundary from '../components/ErrorBoundary';
+
 export default function Edit({ attributes, setAttributes, clientId }) {
     const {
-        columnsCount,
-        stackMobile,
-        columnGap,
-        verticalAlign,
-        reverseOrder
+        columnsCount = 2,
+        stackMobile = true,
+        columnGap = { value: 20, unit: 'px' },
+        verticalAlign = 'stretch',
+        reverseOrder = false
     } = attributes;
 
     const blockProps = useBlockProps({
         className: `flexblocks-columns count-${columnsCount}`,
         style: {
-            '--column-gap': `${columnGap.value}${columnGap.unit}`,
+            '--column-gap': `${columnGap?.value || 20}${columnGap?.unit || 'px'}`,
             '--vertical-align': verticalAlign === 'top' ? 'flex-start' : verticalAlign === 'bottom' ? 'flex-end' : verticalAlign,
             '--stack-mobile': stackMobile ? 'column' : 'row',
             '--flex-direction': reverseOrder ? 'row-reverse' : 'row'
@@ -41,12 +44,14 @@ export default function Edit({ attributes, setAttributes, clientId }) {
     }), [clientId]);
 
     const updateColumns = (count) => {
-        setAttributes({ columnsCount: count });
+        // Validate count
+        const validCount = Math.max(1, Math.min(6, parseInt(count) || 2));
+        setAttributes({ columnsCount: validCount });
 
-        const currentCount = innerBlocks.length;
-        if (count > currentCount) {
-            const newBlocks = [...innerBlocks];
-            for (let i = currentCount; i < count; i++) {
+        const currentCount = innerBlocks?.length || 0;
+        if (validCount > currentCount) {
+            const newBlocks = [...(innerBlocks || [])];
+            for (let i = currentCount; i < validCount; i++) {
                 newBlocks.push(createBlock('flexblocks/column'));
             }
             replaceInnerBlocks(clientId, newBlocks);
@@ -54,7 +59,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
     };
 
     return (
-        <>
+        <ErrorBoundary>
             <InspectorControls>
                 <PanelBody title={__('Layout', 'flexblocks')}>
                     <RangeControl
@@ -71,8 +76,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                     />
                     <RangeControl
                         label={__('Gap (px)', 'flexblocks')}
-                        value={columnGap.value}
-                        onChange={(value) => setAttributes({ columnGap: { ...columnGap, value } })}
+                        value={columnGap?.value || 20}
+                        onChange={(value) => setAttributes({ 
+                            columnGap: { 
+                                ...columnGap, 
+                                value: Math.max(0, Math.min(100, parseInt(value) || 0))
+                            } 
+                        })}
                         min={0}
                         max={100}
                     />
@@ -103,6 +113,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                     orientation="horizontal"
                 />
             </div>
-        </>
+        </ErrorBoundary>
     );
 }

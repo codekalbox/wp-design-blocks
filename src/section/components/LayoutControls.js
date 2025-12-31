@@ -1,21 +1,17 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody, SelectControl, RangeControl } from '@wordpress/components';
 import { DeviceToggle } from './DeviceToggle';
+import { getResponsiveValue, updateResponsiveAttribute } from '../../utils/attributeHelpers';
 
 export const LayoutControls = ({ attributes, setAttributes, activeDevice, setActiveDevice }) => {
-    const { layout, flex, visibility } = attributes;
+    const { layout = {}, flex = {}, visibility = {} } = attributes;
 
     const updateAttribute = (category, field, value) => {
         setAttributes({ [category]: { ...attributes[category], [field]: value } });
     };
 
-    const updateResponsiveAttribute = (category, field, value) => {
-        setAttributes({
-            [category]: {
-                ...attributes[category],
-                [activeDevice]: { ...attributes[category][activeDevice], [field]: value }
-            }
-        });
+    const updateResponsiveAttributeLocal = (category, field, value) => {
+        updateResponsiveAttribute(attributes, setAttributes, category, activeDevice, field, value);
     };
 
     return (
@@ -23,7 +19,7 @@ export const LayoutControls = ({ attributes, setAttributes, activeDevice, setAct
             <PanelBody title={__('Layout Structure', 'flexblocks')} initialOpen={true}>
                 <SelectControl
                     label={__('Content Width', 'flexblocks')}
-                    value={layout.widthType}
+                    value={layout?.widthType || 'boxed'}
                     options={[
                         { label: 'Boxed', value: 'boxed' },
                         { label: 'Full Width', value: 'full' },
@@ -31,11 +27,19 @@ export const LayoutControls = ({ attributes, setAttributes, activeDevice, setAct
                     ]}
                     onChange={(value) => updateAttribute('layout', 'widthType', value)}
                 />
-                {layout.widthType !== 'full' && (
+                {layout?.widthType !== 'full' && (
                     <RangeControl
                         label={__('Max Width (px)', 'flexblocks')}
-                        value={layout.contentWidth.value}
-                        onChange={(value) => setAttributes({ layout: { ...layout, contentWidth: { ...layout.contentWidth, value } } })}
+                        value={layout?.contentWidth?.value || 1200}
+                        onChange={(value) => setAttributes({ 
+                            layout: { 
+                                ...layout, 
+                                contentWidth: { 
+                                    ...layout?.contentWidth, 
+                                    value 
+                                } 
+                            } 
+                        })}
                         min={300} max={1920}
                     />
                 )}
@@ -44,12 +48,11 @@ export const LayoutControls = ({ attributes, setAttributes, activeDevice, setAct
                     <DeviceToggle activeDevice={activeDevice} setActiveDevice={setActiveDevice} />
                 </div>
                 <RangeControl
-                    value={layout.minHeight[activeDevice].value}
-                    onChange={(value) => {
-                        const newHeight = { ...layout.minHeight };
-                        newHeight[activeDevice] = { ...newHeight[activeDevice], value };
-                        setAttributes({ layout: { ...layout, minHeight: newHeight } });
-                    }}
+                    value={getResponsiveValue(layout?.minHeight, activeDevice, 'value', 0)}
+                    onChange={(value) => updateResponsiveAttributeLocal('layout', 'minHeight', { 
+                        ...getResponsiveValue(layout?.minHeight, activeDevice, '', {}), 
+                        value 
+                    })}
                     min={0} max={1000}
                 />
             </PanelBody>
@@ -58,18 +61,18 @@ export const LayoutControls = ({ attributes, setAttributes, activeDevice, setAct
                 <DeviceToggle activeDevice={activeDevice} setActiveDevice={setActiveDevice} />
                 <SelectControl
                     label={__('Direction', 'flexblocks')}
-                    value={flex[activeDevice].direction}
+                    value={getResponsiveValue(flex, activeDevice, 'direction', 'column')}
                     options={[
                         { label: 'Column (Stack)', value: 'column' },
                         { label: 'Row (Horizontal)', value: 'row' },
                         { label: 'Row Reverse', value: 'row-reverse' },
                         { label: 'Column Reverse', value: 'column-reverse' },
                     ]}
-                    onChange={(value) => updateResponsiveAttribute('flex', 'direction', value)}
+                    onChange={(value) => updateResponsiveAttributeLocal('flex', 'direction', value)}
                 />
                 <SelectControl
                     label={__('Justify Content', 'flexblocks')}
-                    value={flex[activeDevice].justify}
+                    value={getResponsiveValue(flex, activeDevice, 'justify', 'flex-start')}
                     options={[
                         { label: 'Start (Flex Start)', value: 'flex-start' },
                         { label: 'Center', value: 'center' },
@@ -77,33 +80,33 @@ export const LayoutControls = ({ attributes, setAttributes, activeDevice, setAct
                         { label: 'Space Between', value: 'space-between' },
                         { label: 'Space Around', value: 'space-around' },
                     ]}
-                    onChange={(value) => updateResponsiveAttribute('flex', 'justify', value)}
+                    onChange={(value) => updateResponsiveAttributeLocal('flex', 'justify', value)}
                 />
                 <SelectControl
                     label={__('Align Items', 'flexblocks')}
-                    value={flex[activeDevice].align}
+                    value={getResponsiveValue(flex, activeDevice, 'align', 'stretch')}
                     options={[
                         { label: 'Stretch', value: 'stretch' },
                         { label: 'Center', value: 'center' },
                         { label: 'Start', value: 'flex-start' },
                         { label: 'End', value: 'flex-end' },
                     ]}
-                    onChange={(value) => updateResponsiveAttribute('flex', 'align', value)}
+                    onChange={(value) => updateResponsiveAttributeLocal('flex', 'align', value)}
                 />
                 <SelectControl
                     label={__('Wrap', 'flexblocks')}
-                    value={flex[activeDevice].wrap}
+                    value={getResponsiveValue(flex, activeDevice, 'wrap', 'nowrap')}
                     options={[
                         { label: 'No Wrap', value: 'nowrap' },
                         { label: 'Wrap', value: 'wrap' },
                         { label: 'Wrap Reverse', value: 'wrap-reverse' },
                     ]}
-                    onChange={(value) => updateResponsiveAttribute('flex', 'wrap', value)}
+                    onChange={(value) => updateResponsiveAttributeLocal('flex', 'wrap', value)}
                 />
                 <RangeControl
                     label={__('Gap (px)', 'flexblocks')}
-                    value={flex[activeDevice].gap}
-                    onChange={(value) => updateResponsiveAttribute('flex', 'gap', value)}
+                    value={getResponsiveValue(flex, activeDevice, 'gap', 0)}
+                    onChange={(value) => updateResponsiveAttributeLocal('flex', 'gap', value)}
                     min={0} max={100}
                 />
             </PanelBody>
