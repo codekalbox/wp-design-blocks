@@ -1,177 +1,128 @@
 import { __ } from '@wordpress/i18n';
-import { 
-	useBlockProps, 
-	InnerBlocks, 
-	InspectorControls
+import {
+    useBlockProps,
+    InnerBlocks,
+    InspectorControls,
 } from '@wordpress/block-editor';
-import { 
-	PanelBody, 
-	SelectControl, 
-	RangeControl, 
-	ToggleControl,
-    TextControl,
-    ColorPalette
+import {
+    TabPanel,
 } from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
 import './editor.scss';
 
-export default function Edit( { attributes, setAttributes } ) {
+// Import refactored components
+import { LayoutControls } from './components/LayoutControls';
+import { StylingControls } from './components/StylingControls';
+import { AdvancedControls } from './components/AdvancedControls';
+
+export default function Edit({ attributes, setAttributes, clientId }) {
     const {
+        uniqueId,
         tagName,
-        layoutWidth,
-        maxWidth,
-        minHeight,
-        flexDirection,
-        justifyContent,
-        alignItems,
-        flexWrap,
-        gap,
-        zIndex,
-        overflow
+        layout,
+        flex,
+        visibility,
+        styleBackground,
+        styleOverlay,
+        styleSpacing,
+        animation
     } = attributes;
 
-    const blockProps = useBlockProps( {
-        className: `flexblocks-section layout-${layoutWidth}`,
-        style: {
-            // We use CSS variables for dynamic styles to avoid inline style mess
-            '--flex-direction': flexDirection,
-            '--justify-content': justifyContent,
-            '--align-items': alignItems,
-            '--flex-wrap': flexWrap,
-            '--gap': `${gap.value}${gap.unit}`,
-            '--min-height': `${minHeight.value}${minHeight.unit}`,
-            '--max-width': layoutWidth === 'boxed' ? `${maxWidth.value}${maxWidth.unit}` : '100%',
-            '--z-index': zIndex,
-            '--overflow': overflow
-        }
-    } );
+    const [activeDevice, setActiveDevice] = useState('desktop');
 
-    const Tag = tagName;
+    // Generate Unique ID safely based on ClientID for consistency
+    useEffect(() => {
+        if (!uniqueId) {
+            setAttributes({ uniqueId: `flex-${clientId.slice(0, 8)}` });
+        }
+    }, [clientId]);
+
+    const blockProps = useBlockProps({
+        className: `flexblocks-section layout-${layout.widthType} ${animation.type !== 'none' ? 'has-animation' : ''}`,
+        style: {
+            '--content-width': layout.widthType === 'boxed' ? `${layout.contentWidth.value}${layout.contentWidth.unit}` : '100%',
+            '--min-height': `${layout.minHeight[activeDevice]?.value || 0}${layout.minHeight[activeDevice]?.unit || 'px'}`,
+            '--flex-dir': flex[activeDevice]?.direction,
+            '--justify': flex[activeDevice]?.justify,
+            '--align': flex[activeDevice]?.align,
+            '--wrap': flex[activeDevice]?.wrap,
+            '--gap': `${flex[activeDevice]?.gap}px`,
+            '--pt': `${styleSpacing.padding[activeDevice]?.top}${styleSpacing.padding[activeDevice]?.unit}`,
+            '--pr': `${styleSpacing.padding[activeDevice]?.right}${styleSpacing.padding[activeDevice]?.unit}`,
+            '--pb': `${styleSpacing.padding[activeDevice]?.bottom}${styleSpacing.padding[activeDevice]?.unit}`,
+            '--pl': `${styleSpacing.padding[activeDevice]?.left}${styleSpacing.padding[activeDevice]?.unit}`,
+            '--mt': `${styleSpacing.margin[activeDevice]?.top}${styleSpacing.margin[activeDevice]?.unit}`,
+            '--mr': `${styleSpacing.margin[activeDevice]?.right}${styleSpacing.margin[activeDevice]?.unit}`,
+            '--mb': `${styleSpacing.margin[activeDevice]?.bottom}${styleSpacing.margin[activeDevice]?.unit}`,
+            '--ml': `${styleSpacing.margin[activeDevice]?.left}${styleSpacing.margin[activeDevice]?.unit}`,
+            '--bg-color': styleBackground.type === 'color' ? styleBackground.color : 'transparent',
+            '--bg-image': styleBackground.type === 'image' && styleBackground.image?.url ? `url(${styleBackground.image.url})` : styleBackground.type === 'gradient' ? styleBackground.gradient : 'none',
+            '--bg-pos': styleBackground.position,
+            '--bg-size': styleBackground.size,
+            '--overlay-color': styleOverlay.type === 'color' ? styleOverlay.color : 'transparent',
+            '--overlay-grad': styleOverlay.type === 'gradient' ? styleOverlay.gradient : 'none',
+            '--overlay-opacity': styleOverlay.opacity,
+            '--overlay-blend': styleOverlay.blendMode,
+        }
+    });
 
     return (
         <>
             <InspectorControls>
-                <PanelBody title={ __( 'Layout', 'flexblocks' ) }>
-                    <SelectControl
-                        label={ __( 'HTML Tag', 'flexblocks' ) }
-                        value={ tagName }
-                        options={ [
-                            { label: 'Section', value: 'section' },
-                            { label: 'Div', value: 'div' },
-                            { label: 'Header', value: 'header' },
-                            { label: 'Footer', value: 'footer' },
-                            { label: 'Article', value: 'article' },
-                            { label: 'Aside', value: 'aside' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { tagName: value } ) }
-                    />
-                    <SelectControl
-                        label={ __( 'Content Width', 'flexblocks' ) }
-                        value={ layoutWidth }
-                        options={ [
-                            { label: 'Boxed', value: 'boxed' },
-                            { label: 'Full Width', value: 'full' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { layoutWidth: value } ) }
-                    />
-                    { layoutWidth === 'boxed' && (
-                        <RangeControl
-                            label={ __( 'Max Width (px)', 'flexblocks' ) }
-                            value={ maxWidth.value }
-                            onChange={ ( value ) => setAttributes( { maxWidth: { ...maxWidth, value } } ) }
-                            min={ 300 }
-                            max={ 1920 }
-                        />
-                    ) }
-                    <RangeControl
-                        label={ __( 'Min Height (px)', 'flexblocks' ) }
-                        value={ minHeight.value }
-                        onChange={ ( value ) => setAttributes( { minHeight: { ...minHeight, value } } ) }
-                        min={ 0 }
-                        max={ 1000 }
-                    />
-                </PanelBody>
-
-                <PanelBody title={ __( 'Flexbox', 'flexblocks' ) } initialOpen={ false }>
-                    <SelectControl
-                        label={ __( 'Direction', 'flexblocks' ) }
-                        value={ flexDirection }
-                        options={ [
-                            { label: 'Row', value: 'row' },
-                            { label: 'Row Reverse', value: 'row-reverse' },
-                            { label: 'Column', value: 'column' },
-                            { label: 'Column Reverse', value: 'column-reverse' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { flexDirection: value } ) }
-                    />
-                    <SelectControl
-                        label={ __( 'Justify Content', 'flexblocks' ) }
-                        value={ justifyContent }
-                        options={ [
-                            { label: 'Start', value: 'flex-start' },
-                            { label: 'End', value: 'flex-end' },
-                            { label: 'Center', value: 'center' },
-                            { label: 'Space Between', value: 'space-between' },
-                            { label: 'Space Around', value: 'space-around' },
-                            { label: 'Space Evenly', value: 'space-evenly' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { justifyContent: value } ) }
-                    />
-                    <SelectControl
-                        label={ __( 'Align Items', 'flexblocks' ) }
-                        value={ alignItems }
-                        options={ [
-                            { label: 'Start', value: 'flex-start' },
-                            { label: 'End', value: 'flex-end' },
-                            { label: 'Center', value: 'center' },
-                            { label: 'Stretch', value: 'stretch' },
-                            { label: 'Baseline', value: 'baseline' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { alignItems: value } ) }
-                    />
-                    <SelectControl
-                        label={ __( 'Wrap', 'flexblocks' ) }
-                        value={ flexWrap }
-                        options={ [
-                            { label: 'No Wrap', value: 'nowrap' },
-                            { label: 'Wrap', value: 'wrap' },
-                            { label: 'Wrap Reverse', value: 'wrap-reverse' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { flexWrap: value } ) }
-                    />
-                    <RangeControl
-                        label={ __( 'Gap (px)', 'flexblocks' ) }
-                        value={ gap.value }
-                        onChange={ ( value ) => setAttributes( { gap: { ...gap, value } } ) }
-                        min={ 0 }
-                        max={ 100 }
-                    />
-                </PanelBody>
-
-                <PanelBody title={ __( 'Advanced', 'flexblocks' ) } initialOpen={ false }>
-                    <RangeControl
-                        label={ __( 'Z-Index', 'flexblocks' ) }
-                        value={ zIndex }
-                        onChange={ ( value ) => setAttributes( { zIndex: value } ) }
-                        min={ -10 }
-                        max={ 100 }
-                    />
-                    <SelectControl
-                        label={ __( 'Overflow', 'flexblocks' ) }
-                        value={ overflow }
-                        options={ [
-                            { label: 'Visible', value: 'visible' },
-                            { label: 'Hidden', value: 'hidden' },
-                            { label: 'Scroll', value: 'scroll' },
-                            { label: 'Auto', value: 'auto' },
-                        ] }
-                        onChange={ ( value ) => setAttributes( { overflow: value } ) }
-                    />
-                </PanelBody>
+                <div className="flexblocks-tabs-wrapper">
+                    <TabPanel
+                        className="flexblocks-tab-panel"
+                        activeClass="active-tab"
+                        tabs={[
+                            { name: 'settings', title: 'Settings', className: 'tab-settings' },
+                            { name: 'styling', title: 'Styling', className: 'tab-styling' },
+                            { name: 'advanced', title: 'Advanced', className: 'tab-advanced' },
+                        ]}
+                    >
+                        {(tab) => (
+                            <div className="flexblocks-inspector-content">
+                                {tab.name === 'settings' && (
+                                    <LayoutControls
+                                        attributes={attributes}
+                                        setAttributes={setAttributes}
+                                        activeDevice={activeDevice}
+                                        setActiveDevice={setActiveDevice}
+                                    />
+                                )}
+                                {tab.name === 'styling' && (
+                                    <StylingControls
+                                        attributes={attributes}
+                                        setAttributes={setAttributes}
+                                        activeDevice={activeDevice}
+                                        setActiveDevice={setActiveDevice}
+                                    />
+                                )}
+                                {tab.name === 'advanced' && (
+                                    <AdvancedControls
+                                        attributes={attributes}
+                                        setAttributes={setAttributes}
+                                    />
+                                )}
+                            </div>
+                        )}
+                    </TabPanel>
+                </div>
             </InspectorControls>
 
-            <Tag { ...blockProps }>
+            {/* Visual Editor Render */}
+            <div {...blockProps}>
+                {styleOverlay.enable && (
+                    <div className="flexblocks-overlay" style={{
+                        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                        background: styleOverlay.type === 'gradient' ? styleOverlay.gradient : styleOverlay.color,
+                        opacity: styleOverlay.opacity,
+                        mixBlendMode: styleOverlay.blendMode,
+                        pointerEvents: 'none',
+                        zIndex: -1
+                    }}></div>
+                )}
                 <InnerBlocks />
-            </Tag>
+            </div>
         </>
     );
 }

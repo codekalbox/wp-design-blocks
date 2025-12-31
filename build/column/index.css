@@ -1,0 +1,1 @@
+.block-editor-block-list__block[data-type="flexblocks/column"]{background-color:rgba(0,0,0,.02);outline:1px dashed rgba(0,0,0,.05);transition:background-color .2s ease}.block-editor-block-list__block[data-type="flexblocks/column"].is-selected{background-color:rgba(0,0,0,.05);outline-color:var(--wp-admin-theme-color)}

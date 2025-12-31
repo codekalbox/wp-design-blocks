@@ -1,4 +1,8 @@
 .flexblocks-columns {
-    border: 1px dotted #ccc;
-    padding: 10px;
+    border: 1px dashed transparent; // Hidden by default
+    min-height: 50px;
+
+    &.is-selected {
+        border-color: var(--wp-admin-theme-color);
+    }
 }

@@ -1,0 +1,10 @@
+.block-editor-block-list__block[data-type="flexblocks/column"] {
+    outline: 1px dashed rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.02); // Very subtle tint
+    transition: background-color 0.2s ease;
+
+    &.is-selected {
+        outline-color: var(--wp-admin-theme-color);
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}

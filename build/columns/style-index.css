@@ -1,0 +1,1 @@
+.flexblocks-columns{align-items:var(--vertical-align,stretch);display:flex;flex-direction:var(--flex-direction,row);flex-wrap:wrap;gap:var(--column-gap,20px);width:100%}.flexblocks-columns>*{flex:1;min-width:0}@media(max-width:767px){.flexblocks-columns{flex-direction:var(--stack-mobile,row)}.flexblocks-columns>*{flex-basis:100%!important;width:100%!important}}

@@ -2,7 +2,8 @@
 function flexblocks_register_blocks() {
     $blocks = [
         'section',
-        'columns'
+        'columns',
+        'column'
     ];
 
     foreach ( $blocks as $block ) {

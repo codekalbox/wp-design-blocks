@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "flexblocks/column",
+    "version": "1.0.0",
+    "title": "Column",
+    "category": "wp-design-blocks",
+    "icon": "columns",
+    "description": "A single column within the Section block.",
+    "parent": [
+        "flexblocks/section"
+    ],
+    "supports": {
+        "html": false,
+        "anchor": true,
+        "color": {
+            "background": true,
+            "text": true,
+            "gradient": true
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": true
+        }
+    },
+    "attributes": {
+        "width": {
+            "type": "object",
+            "default": {
+                "desktop": {
+                    "value": "",
+                    "unit": "%"
+                },
+                "tablet": {
+                    "value": "",
+                    "unit": "%"
+                },
+                "mobile": {
+                    "value": "100",
+                    "unit": "%"
+                }
+            }
+        },
+        "flexGrow": {
+            "type": "number",
+            "default": 1
+        },
+        "flexShrink": {
+            "type": "number",
+            "default": 1
+        },
+        "verticalAlign": {
+            "type": "string",
+            "default": "stretch"
+        },
+        "advanced": {
+            "type": "object",
+            "default": {
+                "zIndex": 1
+            }
+        }
+    },
+    "textdomain": "flexblocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css"
+}

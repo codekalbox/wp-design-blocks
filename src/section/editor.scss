@@ -1,7 +1,100 @@
-.flexblocks-section {
-    border: 1px dashed rgba(0,0,0,0.1);
-    
-    &.is-selected {
-        border-color: var(--wp-admin-theme-color);
-    }
+/**
+ * Editor Styles for FlexBlocks Section
+ */
+
+.flexblocks-tabs-wrapper {
+    margin-bottom: 24px;
+}
+
+.flexblocks-tab-panel .components-tab-panel__tabs {
+    display: flex;
+    justify-content: space-between;
+    background: #f0f0f1;
+    border-radius: 4px;
+    padding: 2px;
+    margin-bottom: 16px;
+}
+
+.flexblocks-tab-panel .components-tab-panel__tabs>button {
+    flex-grow: 1;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #555;
+    padding: 8px 0;
+}
+
+.flexblocks-tab-panel .components-tab-panel__tabs>button.active-tab {
+    background: #fff;
+    color: #1e1e1e;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.flexblocks-device-toggle {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+    gap: 4px;
+}
+
+.responsive-control-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.spacing-controls input {
+    text-align: center;
+}
+
+/* Visual Editor Box */
+.wp-block-flexblocks-section {
+    position: relative;
+    /* Variables are applied inline, but ensure defaults */
+    display: flex;
+    flex-direction: var(--flex-dir, column);
+    justify-content: var(--justify, flex-start);
+    align-items: var(--align, stretch);
+    flex-wrap: var(--wrap, nowrap);
+    gap: var(--gap, 0px);
+
+    min-height: var(--min-height, 0);
+    max-width: var(--content-width, 100%);
+
+    padding-top: var(--pt, 0px);
+    padding-right: var(--pr, 0px);
+    padding-bottom: var(--pb, 0px);
+    padding-left: var(--pl, 0px);
+
+    margin-top: var(--mt, 0px);
+    margin-right: var(--mr, 0px);
+    margin-bottom: var(--mb, 0px);
+    margin-left: var(--ml, 0px);
+
+    background-color: var(--bg-color, transparent);
+    background-image: var(--bg-image, none);
+    background-position: var(--bg-pos, center);
+    background-size: var(--bg-size, cover);
+    background-repeat: var(--bg-repeat, no-repeat);
+
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    /* Helper for editor */
+    transition: all 0.3s ease;
+}
+
+.wp-block-flexblocks-section:hover {
+    border-color: #007cba;
+}
+
+.wp-block-flexblocks-section.layout-boxed {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.has-animation {
+    /* Visual cue in editor that animation is active */
+    outline: 2px solid #9b59b6;
 }
