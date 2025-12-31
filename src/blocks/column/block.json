@@ -1,0 +1,70 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-dsgn-blocks/column",
+	"version": "1.0.0",
+	"title": "Column",
+	"category": "layout",
+	"parent": [ "wp-dsgn-blocks/section" ],
+	"description": "A single column within a section.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"gradient": true
+		},
+        "spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		}
+	},
+	"attributes": {
+		"width": {
+			"type": "object",
+			"default": {
+				"value": 100,
+				"unit": "%"
+			}
+		},
+        "widthType": {
+            "type": "string",
+            "default": "percentage"
+        },
+        "flexGrow": {
+            "type": "number",
+            "default": 1
+        },
+        "flexShrink": {
+            "type": "number",
+            "default": 1
+        },
+        "alignSelf": {
+            "type": "string",
+            "default": "auto"
+        },
+        "order": {
+            "type": "object",
+            "default": {
+                "desktop": 0,
+                "tablet": 0,
+                "mobile": 0
+            }
+        },
+		"animation": {
+			"type": "object",
+			"default": {
+				"type": "none",
+				"duration": 0.5,
+				"delay": 0,
+				"easing": "ease-out"
+			}
+		}
+	},
+	"textdomain": "wp-dsgn-blocks",
+	"editorScript": "file:../../index.js", 
+    "editorStyle": "file:../../index.css",
+	"style": "file:../../style-index.css"
+}

@@ -1,0 +1,123 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-dsgn-blocks/section",
+	"version": "1.0.0",
+	"title": "Section",
+	"category": "layout",
+	"icon": "layout",
+	"description": "A container block for creating advanced layouts.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "full", "wide" ],
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"color": {
+			"background": true,
+			"text": true,
+			"gradient": true
+		},
+        "typography": {
+            "fontSize": true,
+            "lineHeight": true
+        },
+        "layout": true
+	},
+	"attributes": {
+		"tagName": {
+			"type": "string",
+			"default": "section"
+		},
+		"layoutWidth": {
+			"type": "string",
+			"default": "boxed"
+		},
+		"maxWidth": {
+			"type": "object",
+			"default": {
+				"value": 1200,
+				"unit": "px"
+			}
+		},
+		"minHeight": {
+			"type": "object",
+			"default": {
+				"value": 0,
+				"unit": "px"
+			}
+		},
+		"heightType": {
+			"type": "string",
+			"default": "auto"
+		},
+		"flexParams": {
+			"type": "object",
+			"default": {
+				"direction": "row",
+				"wrap": "wrap",
+				"justifyContent": "flex-start",
+				"alignItems": "stretch"
+			}
+		},
+		"columnGap": {
+			"type": "object",
+			"default": {
+				"desktop": "20px",
+				"tablet": "15px",
+				"mobile": "10px"
+			}
+		},
+		"backgroundSettings": {
+			"type": "object",
+			"default": {}
+		},
+		"overlaySettings": {
+			"type": "object",
+			"default": {}
+		},
+		"borderSettings": {
+			"type": "object",
+			"default": {}
+		},
+		"shadowSettings": {
+			"type": "object",
+			"default": {}
+		},
+		"deviceVisibility": {
+			"type": "object",
+			"default": {
+				"desktop": true,
+				"tablet": true,
+				"mobile": true
+			}
+		},
+		"animation": {
+			"type": "object",
+			"default": {
+				"type": "none",
+				"duration": 0.5,
+				"delay": 0,
+				"easing": "ease-out",
+				"repeat": "once",
+				"threshold": 0.2
+			}
+		},
+		"zIndex": {
+			"type": "number",
+			"default": 0
+		},
+		"overflow": {
+			"type": "string",
+			"default": "visible"
+		}
+	},
+	"textdomain": "wp-dsgn-blocks",
+	"editorScript": "file:../../index.js",
+	"editorStyle": "file:../../index.css",
+	"style": "file:../../style-index.css",
+    "viewScript": "file:./view.js"
+}

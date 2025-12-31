@@ -1,0 +1,19 @@
+.wp-dsgn-section {
+    // Show dashed border in editor to visualize structure
+    border: 1px dashed #ccc;
+    padding: 10px; // Default padding for visibility
+
+    &.hide-desktop, &.hide-tablet, &.hide-mobile {
+        opacity: 0.5;
+        &::after {
+            content: 'Hidden on some devices';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 4px;
+        }
+    }
+}
