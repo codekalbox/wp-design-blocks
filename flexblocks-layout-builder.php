@@ -37,13 +37,27 @@ function flexblocks_check_requirements() {
 	global $wp_version;
 	if ( version_compare( $wp_version, '6.0', '<' ) ) {
 		add_action( 'admin_notices', function() {
-			echo '<div class="notice notice-error"><p>' . esc_html__( 'FlexBlocks Layout Builder requires WordPress 6.0 or higher.', 'flexblocks' ) . '</p></div>';
+			echo '<div class="notice notice-error" role="alert"><p>' . esc_html__( 'FlexBlocks Layout Builder requires WordPress 6.0 or higher.', 'flexblocks' ) . '</p></div>';
 		} );
 	}
     if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
         add_action( 'admin_notices', function() {
-			echo '<div class="notice notice-error"><p>' . esc_html__( 'FlexBlocks Layout Builder requires PHP 7.4 or higher.', 'flexblocks' ) . '</p></div>';
+			echo '<div class="notice notice-error" role="alert"><p>' . esc_html__( 'FlexBlocks Layout Builder requires PHP 7.4 or higher.', 'flexblocks' ) . '</p></div>';
 		} );
     }
 }
 add_action( 'admin_init', 'flexblocks_check_requirements' );
+
+// Enqueue frontend scripts and styles
+function flexblocks_enqueue_frontend_assets() {
+    if ( has_block( 'flexblocks/section' ) || has_block( 'flexblocks/columns' ) || has_block( 'flexblocks/column' ) ) {
+        wp_enqueue_script(
+            'flexblocks-frontend',
+            plugin_dir_url( __FILE__ ) . 'build/frontend.js',
+            array(),
+            '1.0.0',
+            true
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'flexblocks_enqueue_frontend_assets' );
