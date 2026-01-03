@@ -1,0 +1,104 @@
+/**
+ * Shared SCSS mixins.
+ *
+ * @package WP_Design_Blocks
+ */
+
+@import 'variables';
+
+/**
+ * Responsive media queries.
+ */
+@mixin mobile {
+	@media (max-width: $breakpoint-mobile - 1) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet - 1) {
+		@content;
+	}
+}
+
+@mixin tablet-and-up {
+	@media (min-width: $breakpoint-mobile) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@media (min-width: $breakpoint-tablet) {
+		@content;
+	}
+}
+
+/**
+ * Visibility classes.
+ */
+@mixin visibility-classes {
+	&.wpdb-hide-desktop {
+		@include desktop {
+			display: none !important;
+		}
+	}
+
+	&.wpdb-hide-tablet {
+		@include tablet {
+			display: none !important;
+		}
+	}
+
+	&.wpdb-hide-mobile {
+		@include mobile {
+			display: none !important;
+		}
+	}
+}
+
+/**
+ * Flexbox container.
+ */
+@mixin flex-container {
+	display: flex;
+	flex-direction: var(--flex-direction, column);
+	justify-content: var(--flex-justify, flex-start);
+	align-items: var(--flex-align, stretch);
+	flex-wrap: var(--flex-wrap, nowrap);
+	gap: var(--flex-gap, 20px);
+}
+
+/**
+ * CSS custom properties for responsive spacing.
+ */
+@mixin responsive-spacing {
+	@include desktop {
+		padding-top: var(--padding-top, 0);
+		padding-right: var(--padding-right, 0);
+		padding-bottom: var(--padding-bottom, 0);
+		padding-left: var(--padding-left, 0);
+		margin-top: var(--margin-top, 0);
+		margin-right: var(--margin-right, 0);
+		margin-bottom: var(--margin-bottom, 0);
+		margin-left: var(--margin-left, 0);
+	}
+}
+
+/**
+ * Box shadow from custom properties.
+ */
+@mixin box-shadow {
+	box-shadow: var(--box-shadow, none);
+}
+
+/**
+ * Background from custom properties.
+ */
+@mixin background {
+	background-color: var(--bg-color, transparent);
+	background-image: var(--bg-image, none);
+	background-position: var(--bg-position, center center);
+	background-size: var(--bg-size, cover);
+	background-repeat: var(--bg-repeat, no-repeat);
+}
+

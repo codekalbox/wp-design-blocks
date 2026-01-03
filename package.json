@@ -1,24 +1,54 @@
 {
-  "name": "flexblocks-layout-builder",
-  "version": "1.0.0",
-  "description": "Custom Gutenberg blocks for advanced layout building.",
-  "main": "build/index.js",
-  "scripts": {
-    "build": "wp-scripts build && npm run copy-json",
-    "copy-json": "node -e \"const fs=require('fs');const path=require('path');function copyJsonFiles(src,dest){const items=fs.readdirSync(src,{withFileTypes:true});items.forEach(item=>{const srcPath=path.join(src,item.name);const destPath=path.join(dest,item.name);if(item.isDirectory()){if(!fs.existsSync(destPath))fs.mkdirSync(destPath,{recursive:true});copyJsonFiles(srcPath,destPath);}else if(path.extname(item.name)==='.json'){if(!fs.existsSync(dest))fs.mkdirSync(dest,{recursive:true});fs.copyFileSync(srcPath,destPath);}});}copyJsonFiles('src','build');\"",
-    "start": "wp-scripts start",
-    "packages-update": "wp-scripts packages-update"
-  },
-  "dependencies": {
-    "@wordpress/block-editor": "^12.0.0",
-    "@wordpress/blocks": "^12.0.0",
-    "@wordpress/components": "^25.0.0",
-    "@wordpress/element": "^5.0.0",
-    "@wordpress/i18n": "^4.0.0",
-    "@wordpress/primitives": "^3.0.0",
-    "classnames": "^2.3.2"
-  },
-  "devDependencies": {
-    "@wordpress/scripts": "^26.0.0"
-  }
+	"name": "wp-design-blocks",
+	"version": "2.0.0",
+	"description": "Modern, flexible layout blocks for Gutenberg with advanced responsive controls and design options.",
+	"author": "MW. Studio",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"blocks",
+		"layout",
+		"responsive"
+	],
+	"homepage": "https://example.com/wp-design-blocks",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/yourusername/wp-design-blocks.git"
+	},
+	"bugs": {
+		"url": "https://github.com/yourusername/wp-design-blocks/issues"
+	},
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"check-engines": "wp-scripts check-engines",
+		"check-licenses": "wp-scripts check-licenses",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:md:docs": "wp-scripts lint-md-docs",
+		"lint:pkg-json": "wp-scripts lint-pkg-json",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"test:unit": "wp-scripts test-unit-js"
+	},
+	"dependencies": {
+		"@wordpress/block-editor": "^13.0.0",
+		"@wordpress/blocks": "^13.0.0",
+		"@wordpress/components": "^28.0.0",
+		"@wordpress/element": "^6.0.0",
+		"@wordpress/i18n": "^5.0.0",
+		"@wordpress/icons": "^10.0.0",
+		"classnames": "^2.5.1"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^27.0.0"
+	},
+	"engines": {
+		"node": ">=18.12.0",
+		"npm": ">=8.19.0"
+	}
 }
+
