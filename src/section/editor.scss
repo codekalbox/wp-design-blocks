@@ -1,100 +1,202 @@
 /**
- * Editor Styles for FlexBlocks Section
+ * Section Block Editor Styles.
+ *
+ * @package WP_Design_Blocks
  */
 
-.flexblocks-tabs-wrapper {
-    margin-bottom: 24px;
+@import '../shared/styles/variables';
+@import '../shared/styles/mixins';
+
+// Editor-specific styles for the section block
+.wp-block-wp-design-blocks-section {
+	position: relative;
+	box-sizing: border-box;
+	
+	// Include visibility classes
+	@include visibility-classes;
+
+	// Include flex container styles
+	@include flex-container;
+
+	// Include responsive spacing
+	@include responsive-spacing;
+
+	// Include background styles
+	@include background;
+
+	// Include box shadow
+	@include box-shadow;
+
+	// Min height
+	min-height: var(--min-height, auto);
+
+	// Z-index
+	z-index: var(--z-index, 1);
+
+	// Overflow
+	overflow: var(--overflow, visible);
+
+	// Border radius
+	border-radius: var(--border-radius-top, 0) var(--border-radius-right, 0) var(--border-radius-bottom, 0) var(--border-radius-left, 0);
+
+	// Editor-specific minimum height for better UX
+	min-height: 100px;
+
+	// Ensure all child elements inherit box-sizing
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+
+	// Content container
+	.wpdb-section__content {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		min-height: inherit;
+		
+		// Boxed layout in editor
+		&.wpdb-boxed {
+			max-width: var(--max-width, 1200px);
+			margin-left: auto;
+			margin-right: auto;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+
+	// Overlay styles in editor
+	.wpdb-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		pointer-events: none;
+		z-index: 1;
+		background: var(--overlay-bg, transparent);
+		opacity: var(--overlay-opacity, 1);
+		mix-blend-mode: var(--overlay-blend, normal);
+	}
+
+	// Editor-specific hover state
+	&:hover {
+		outline: 1px dashed $color-primary;
+		outline-offset: 2px;
+	}
+
+	// Selected state
+	&.is-selected {
+		outline: 2px solid $color-primary;
+		outline-offset: 2px;
+	}
+
+	// Empty state styling
+	&:empty,
+	&.is-empty {
+		&::before {
+			content: attr(data-placeholder);
+			color: $color-text-light;
+			font-style: italic;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			pointer-events: none;
+			z-index: 3;
+		}
+	}
+
+	// Appender styling
+	.block-list-appender {
+		margin: 0;
+		
+		.block-editor-button-block-appender {
+			width: 100%;
+			height: 60px;
+			border: 2px dashed $color-border;
+			border-radius: 4px;
+			background: transparent;
+			color: $color-text-light;
+			
+			&:hover {
+				border-color: $color-primary;
+				color: $color-primary;
+			}
+		}
+	}
+
+	// Responsive preview adjustments
+	.is-tablet-preview & {
+		// Tablet-specific editor adjustments
+		.wpdb-section__content.wpdb-boxed {
+			padding-left: 30px;
+			padding-right: 30px;
+		}
+	}
+
+	.is-mobile-preview & {
+		// Mobile-specific editor adjustments
+		.wpdb-section__content.wpdb-boxed {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		
+		// Reduce gap on mobile preview
+		gap: calc(var(--flex-gap, 20px) * 0.75);
+	}
 }
 
-.flexblocks-tab-panel .components-tab-panel__tabs {
-    display: flex;
-    justify-content: space-between;
-    background: #f0f0f1;
-    border-radius: 4px;
-    padding: 2px;
-    margin-bottom: 16px;
+// Inspector controls styling
+.wpdb-responsive-control {
+	margin-bottom: $control-gap;
+	
+	.components-button-group {
+		display: flex;
+		width: 100%;
+		
+		.components-button {
+			flex: 1;
+			justify-content: center;
+			
+			&.is-pressed {
+				background: $color-primary;
+				color: white;
+			}
+		}
+	}
 }
 
-.flexblocks-tab-panel .components-tab-panel__tabs>button {
-    flex-grow: 1;
-    text-align: center;
-    border-radius: 4px;
-    font-weight: 500;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #555;
-    padding: 8px 0;
+// Custom control styling
+.wpdb-control-group {
+	margin-bottom: $control-gap;
+	
+	.wpdb-control-label {
+		font-weight: 600;
+		margin-bottom: 8px;
+		display: block;
+		color: $color-text;
+	}
 }
 
-.flexblocks-tab-panel .components-tab-panel__tabs>button.active-tab {
-    background: #fff;
-    color: #1e1e1e;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+// Animation preview in editor (subtle)
+.wpdb-section.wpdb-animate {
+	// Don't show full animations in editor, just subtle hints
+	&.wpdb-animate-fade-in {
+		opacity: 0.9;
+	}
+	
+	&.wpdb-animate-slide-up {
+		transform: translateY(2px);
+	}
+	
+	&.wpdb-animate-zoom-in {
+		transform: scale(0.99);
+	}
+	
+	&.wpdb-animate-scale-up {
+		transform: scale(0.98);
+	}
 }
 
-.flexblocks-device-toggle {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 12px;
-    gap: 4px;
-}
-
-.responsive-control-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-}
-
-.spacing-controls input {
-    text-align: center;
-}
-
-/* Visual Editor Box */
-.wp-block-flexblocks-section {
-    position: relative;
-    /* Variables are applied inline, but ensure defaults */
-    display: flex;
-    flex-direction: var(--flex-dir, column);
-    justify-content: var(--justify, flex-start);
-    align-items: var(--align, stretch);
-    flex-wrap: var(--wrap, nowrap);
-    gap: var(--gap, 0px);
-
-    min-height: var(--min-height, 0);
-    max-width: var(--content-width, 100%);
-
-    padding-top: var(--pt, 0px);
-    padding-right: var(--pr, 0px);
-    padding-bottom: var(--pb, 0px);
-    padding-left: var(--pl, 0px);
-
-    margin-top: var(--mt, 0px);
-    margin-right: var(--mr, 0px);
-    margin-bottom: var(--mb, 0px);
-    margin-left: var(--ml, 0px);
-
-    background-color: var(--bg-color, transparent);
-    background-image: var(--bg-image, none);
-    background-position: var(--bg-pos, center);
-    background-size: var(--bg-size, cover);
-    background-repeat: var(--bg-repeat, no-repeat);
-
-    border: 1px dashed rgba(0, 0, 0, 0.1);
-    /* Helper for editor */
-    transition: all 0.3s ease;
-}
-
-.wp-block-flexblocks-section:hover {
-    border-color: #007cba;
-}
-
-.wp-block-flexblocks-section.layout-boxed {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.has-animation {
-    /* Visual cue in editor that animation is active */
-    outline: 2px solid #9b59b6;
-}
