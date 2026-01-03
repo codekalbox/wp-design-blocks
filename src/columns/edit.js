@@ -16,7 +16,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import './editor.scss';
 
 // Import utilities
-import ErrorBoundary from '../components/ErrorBoundary';
+import { ErrorBoundary } from '../components';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
     const {
@@ -28,7 +28,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
     } = attributes;
 
     const blockProps = useBlockProps({
-        className: `flexblocks-columns count-${columnsCount}`,
+        className: `wp-design-blocks-columns count-${columnsCount}`,
         style: {
             '--column-gap': `${columnGap?.value || 20}${columnGap?.unit || 'px'}`,
             '--vertical-align': verticalAlign === 'top' ? 'flex-start' : verticalAlign === 'bottom' ? 'flex-end' : verticalAlign,
@@ -52,7 +52,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
         if (validCount > currentCount) {
             const newBlocks = [...(innerBlocks || [])];
             for (let i = currentCount; i < validCount; i++) {
-                newBlocks.push(createBlock('flexblocks/column'));
+                newBlocks.push(createBlock('wp-design-blocks/column'));
             }
             replaceInnerBlocks(clientId, newBlocks);
         }
@@ -61,21 +61,21 @@ export default function Edit({ attributes, setAttributes, clientId }) {
     return (
         <ErrorBoundary>
             <InspectorControls>
-                <PanelBody title={__('Layout', 'flexblocks')}>
+                <PanelBody title={__('Layout', 'wp-design-blocks')}>
                     <RangeControl
-                        label={__('Columns', 'flexblocks')}
+                        label={__('Columns', 'wp-design-blocks')}
                         value={columnsCount}
                         onChange={updateColumns}
                         min={1}
                         max={6}
                     />
                     <ToggleControl
-                        label={__('Stack on Mobile', 'flexblocks')}
+                        label={__('Stack on Mobile', 'wp-design-blocks')}
                         checked={stackMobile}
                         onChange={(value) => setAttributes({ stackMobile: value })}
                     />
                     <RangeControl
-                        label={__('Gap (px)', 'flexblocks')}
+                        label={__('Gap (px)', 'wp-design-blocks')}
                         value={columnGap?.value || 20}
                         onChange={(value) => setAttributes({ 
                             columnGap: { 
@@ -87,7 +87,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         max={100}
                     />
                     <SelectControl
-                        label={__('Vertical Align', 'flexblocks')}
+                        label={__('Vertical Align', 'wp-design-blocks')}
                         value={verticalAlign}
                         options={[
                             { label: 'Top', value: 'top' },
@@ -98,7 +98,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         onChange={(value) => setAttributes({ verticalAlign: value })}
                     />
                     <ToggleControl
-                        label={__('Reverse Order', 'flexblocks')}
+                        label={__('Reverse Order', 'wp-design-blocks')}
                         checked={reverseOrder}
                         onChange={(value) => setAttributes({ reverseOrder: value })}
                     />
@@ -107,8 +107,8 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 
             <div {...blockProps}>
                 <InnerBlocks
-                    allowedBlocks={['flexblocks/column']}
-                    template={Array(columnsCount).fill(['flexblocks/column'])}
+                    allowedBlocks={['wp-design-blocks/column']}
+                    template={Array(columnsCount).fill(['wp-design-blocks/column'])}
                     templateLock={false}
                     orientation="horizontal"
                 />

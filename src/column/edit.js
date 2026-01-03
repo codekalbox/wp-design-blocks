@@ -9,7 +9,7 @@ export default function Edit({ attributes, setAttributes }) {
     const [activeDevice, setActiveDevice] = useState('desktop');
 
     const blockProps = useBlockProps({
-        className: `flexblocks-column`,
+        className: `wp-design-blocks-column`,
         style: {
             '--col-width': width[activeDevice]?.value ? `${width[activeDevice].value}${width[activeDevice].unit}` : '100%',
             '--col-grow': flexGrow,
@@ -32,7 +32,7 @@ export default function Edit({ attributes, setAttributes }) {
         <>
             <InspectorControls>
                 <PanelBody title="Column Sizing">
-                    <div className="flexblocks-device-toggle" style={{ marginBottom: '10px', display: 'flex', gap: '5px' }}>
+                    <div className="wp-design-blocks-device-toggle" style={{ marginBottom: '10px', display: 'flex', gap: '5px' }}>
                         {['desktop', 'tablet', 'mobile'].map(d => (
                             <Button
                                 key={d}
