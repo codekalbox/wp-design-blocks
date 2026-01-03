@@ -1,1 +1,45 @@
-node_modules
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+build/
+
+# Development
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+.npm
+
+# WordPress
+wp-content/
+wp-includes/
+wp-admin/
+
+# Environment
+.env
+.env.local
+
+# Package manager
+package-lock.json
+yarn.lock
+composer.lock
+
+# Testing
+coverage/
+.phpunit.result.cache
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Archives
+*.zip
+*.tar.gz
+

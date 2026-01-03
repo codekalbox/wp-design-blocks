@@ -1,0 +1,124 @@
+/**
+ * Base styles for WP Design Blocks.
+ *
+ * @package WP_Design_Blocks
+ */
+
+@import 'variables';
+
+/**
+ * Base block styles.
+ */
+.wpdb-block {
+	box-sizing: border-box;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+}
+
+/**
+ * Animation base styles.
+ */
+.wpdb-animate {
+	opacity: 0;
+	transition: opacity var(--animation-duration, 0.8s) var(--animation-easing, ease-out);
+
+	&.wpdb-animated {
+		opacity: 1;
+	}
+}
+
+.wpdb-animate-fade-in {
+	&.wpdb-animated {
+		animation: wpdb-fade-in var(--animation-duration, 0.8s) var(--animation-easing, ease-out);
+	}
+}
+
+.wpdb-animate-slide-up {
+	transform: translateY(20px);
+
+	&.wpdb-animated {
+		animation: wpdb-slide-up var(--animation-duration, 0.8s) var(--animation-easing, ease-out);
+	}
+}
+
+.wpdb-animate-zoom-in {
+	transform: scale(0.95);
+
+	&.wpdb-animated {
+		animation: wpdb-zoom-in var(--animation-duration, 0.8s) var(--animation-easing, ease-out);
+	}
+}
+
+.wpdb-animate-scale-up {
+	transform: scale(0.9);
+
+	&.wpdb-animated {
+		animation: wpdb-scale-up var(--animation-duration, 0.8s) var(--animation-easing, ease-out);
+	}
+}
+
+/**
+ * Keyframe animations.
+ */
+@keyframes wpdb-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes wpdb-slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes wpdb-zoom-in {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes wpdb-scale-up {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/**
+ * Overlay base.
+ */
+.wpdb-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	z-index: var(--overlay-z-index, 0);
+	background: var(--overlay-bg, transparent);
+	opacity: var(--overlay-opacity, 1);
+	mix-blend-mode: var(--overlay-blend, normal);
+}
+
