@@ -6,6 +6,5 @@
  * @package WP_Design_Blocks
  */
 
-export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as ErrorBoundary } from './ErrorBoundary.jsx';
 export { default as ResponsiveControl } from './ResponsiveControl';
-

@@ -4,6 +4,7 @@ vendor/
 
 # Build output
 build/
+dist/
 
 # Development
 .DS_Store
@@ -42,4 +43,3 @@ coverage/
 # Archives
 *.zip
 *.tar.gz
-

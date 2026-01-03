@@ -1,31 +1,31 @@
 /**
- * Frontend Styles for FlexBlocks Column
+ * Frontend Styles for WP Design Blocks Column
  */
 
-.flexblocks-column {
+.wp-design-blocks-column {
     box-sizing: border-box;
     display: block;
     /* Acts as container for inner content */
 
     /* Flex Child Props */
-    align-self: var(--fb-col-align, stretch);
-    flex-grow: var(--fb-col-grow, 1);
-    flex-shrink: var(--fb-col-shrink, 1);
+    align-self: var(--wp-design-blocks-col-align, stretch);
+    flex-grow: var(--wp-design-blocks-col-grow, 1);
+    flex-shrink: var(--wp-design-blocks-col-shrink, 1);
 
     /* Width management */
-    width: var(--fb-col-w-d, 100%);
+    width: var(--wp-design-blocks-col-w-d, 100%);
     max-width: 100%;
 }
 
 @media screen and (max-width: 1024px) {
-    .flexblocks-column {
-        width: var(--fb-col-w-t, var(--fb-col-w-d, 100%));
+    .wp-design-blocks-column {
+        width: var(--wp-design-blocks-col-w-t, var(--wp-design-blocks-col-w-d, 100%));
     }
 }
 
 @media screen and (max-width: 768px) {
-    .flexblocks-column {
-        width: var(--fb-col-w-m, 100%);
+    .wp-design-blocks-column {
+        width: var(--wp-design-blocks-col-w-m, 100%);
         /* Default to 100% on mobile if not set */
     }
 }

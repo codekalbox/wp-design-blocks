@@ -10,7 +10,7 @@ export default function Save({ attributes }) {
     } = attributes;
 
     const blockProps = useBlockProps.save({
-        className: `flexblocks-columns count-${columnsCount}`,
+        className: `wp-design-blocks-columns count-${columnsCount}`,
         style: {
             '--column-gap': `${columnGap.value}${columnGap.unit}`,
             '--vertical-align': verticalAlign === 'top' ? 'flex-start' : verticalAlign === 'bottom' ? 'flex-end' : verticalAlign,
