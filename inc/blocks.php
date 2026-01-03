@@ -80,7 +80,7 @@ function register_single_block( $block_name ) {
 function enqueue_frontend_assets() {
 	// Check if any of our blocks are in use.
 	$has_blocks = false;
-	$block_types = array( 'wp-design-blocks/section', 'wp-design-blocks/columns', 'wp-design-blocks/column' );
+	$block_types = array( 'flexblocks/section', 'flexblocks/columns', 'flexblocks/column' );
 
 	foreach ( $block_types as $block_type ) {
 		if ( has_block( $block_type ) ) {
