@@ -52,7 +52,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
         if (validCount > currentCount) {
             const newBlocks = [...(innerBlocks || [])];
             for (let i = currentCount; i < validCount; i++) {
-                newBlocks.push(createBlock('wp-design-blocks/column'));
+                newBlocks.push(createBlock('flexblocks/column'));
             }
             replaceInnerBlocks(clientId, newBlocks);
         }
@@ -61,21 +61,21 @@ export default function Edit({ attributes, setAttributes, clientId }) {
     return (
         <ErrorBoundary>
             <InspectorControls>
-                <PanelBody title={__('Layout', 'wp-design-blocks')}>
+                <PanelBody title={__('Layout', 'flexblocks')}>
                     <RangeControl
-                        label={__('Columns', 'wp-design-blocks')}
+                        label={__('Columns', 'flexblocks')}
                         value={columnsCount}
                         onChange={updateColumns}
                         min={1}
                         max={6}
                     />
                     <ToggleControl
-                        label={__('Stack on Mobile', 'wp-design-blocks')}
+                        label={__('Stack on Mobile', 'flexblocks')}
                         checked={stackMobile}
                         onChange={(value) => setAttributes({ stackMobile: value })}
                     />
                     <RangeControl
-                        label={__('Gap (px)', 'wp-design-blocks')}
+                        label={__('Gap (px)', 'flexblocks')}
                         value={columnGap?.value || 20}
                         onChange={(value) => setAttributes({ 
                             columnGap: { 
@@ -87,7 +87,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         max={100}
                     />
                     <SelectControl
-                        label={__('Vertical Align', 'wp-design-blocks')}
+                        label={__('Vertical Align', 'flexblocks')}
                         value={verticalAlign}
                         options={[
                             { label: 'Top', value: 'top' },
@@ -98,7 +98,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         onChange={(value) => setAttributes({ verticalAlign: value })}
                     />
                     <ToggleControl
-                        label={__('Reverse Order', 'wp-design-blocks')}
+                        label={__('Reverse Order', 'flexblocks')}
                         checked={reverseOrder}
                         onChange={(value) => setAttributes({ reverseOrder: value })}
                     />
@@ -107,8 +107,8 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 
             <div {...blockProps}>
                 <InnerBlocks
-                    allowedBlocks={['wp-design-blocks/column']}
-                    template={Array(columnsCount).fill(['wp-design-blocks/column'])}
+                    allowedBlocks={['flexblocks/column']}
+                    template={Array(columnsCount).fill(['flexblocks/column'])}
                     templateLock={false}
                     orientation="horizontal"
                 />

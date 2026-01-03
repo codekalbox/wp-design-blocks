@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "wp-design-blocks/section",
+	"name": "flexblocks/section",
 	"version": "2.0.0",
 	"title": "Section Container",
 	"category": "wp-design-blocks",
@@ -162,7 +162,7 @@
 		}
 	},
 	"providesContext": {
-		"wp-design-blocks/parentLayout": "layout"
+		"flexblocks/parentLayout": "layout"
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
